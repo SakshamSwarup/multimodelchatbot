@@ -12,15 +12,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent } from "./card";
 
 const MODELS = [
   {
-    id: "deepseek/deepseek-r1-0528-qwen3-8b",
-    name: "Deepseek r1 0528 qwen3-8b",
+    id: "google/gemma-3-4b-it:free",
+    name: "Google Gemma 3 4B IT: free",
+  },
+
+  {
+    id: "deepseek/deepseek-chat-v3-0324:free",
+    name: "Deepseek Chat v3 0324:free",
+  },
+
+  {
+    id: "qwen/qwen3-32b:free",
+    name: "Qwen 3 32B: free",
+  },
+
+  {
+    id: "google/gemma-3-12b-it:free",
+    name: "Google Gemma 3 12B IT: free",
+  },
+
+  {
+    id: "meta-llama/llama-3.3-8b-instruct:free",
+    name: "Meta: Llama 3.3 8B Instruct (free)",
+  },
+
+  {
+    id: "opengvlab/internvl3-14b:free",
+    name: "OpengvLab Internvl3-14b: free",
+  },
+
+  {
+    id: "moonshotai/kimi-vl-a3b-thinking:free",
+    name: "Moonshot AI Kimi VL A3B Thinking: free",
   },
   {
-    id: "deepseek/deepseek-r1-distill-qwen-14b:free",
-    name: "deepseek-r1-distill-qwen-14b:free",
+    id: "microsoft/mai-ds-r1:free",
+    name: "Microsoft Mai DS R1: free",
   },
 ];
 
@@ -50,38 +81,43 @@ export function ChatDemo(props: ChatDemoProps) {
   });
 
   return (
-    <div className={cn("flex", "flex-col", "h-[500px]", "w-full")}>
-      <div className={cn("flex", "justify-end", "mb-2")}>
-        <Select value={selectedModel} onValueChange={setSelectedModel}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Model" />
-          </SelectTrigger>
-          <SelectContent>
-            {MODELS.map((model) => (
-              <SelectItem key={model.id} value={model.id}>
-                {model.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+    <Card className={cn("w-full", "h-screen", "max-w-3xl")}>
+      <CardContent className={cn("flex", "flex-col", "h-full", "w-full")}>
+        {" "}
+        <div className={cn("flex", "flex-col", "h-screen", "w-full")}>
+          <div className={cn("flex", "justify-end", "mb-2")}>
+            <Select value={selectedModel} onValueChange={setSelectedModel}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Select Model" />
+              </SelectTrigger>
+              <SelectContent>
+                {MODELS.map((model) => (
+                  <SelectItem key={model.id} value={model.id}>
+                    {model.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-      <Chat
-        className="grow"
-        messages={messages}
-        handleSubmit={handleSubmit}
-        input={input}
-        handleInputChange={handleInputChange}
-        isGenerating={isLoading}
-        stop={stop}
-        append={append}
-        setMessages={setMessages}
-        suggestions={[
-          "What is the weather in San Francisco?",
-          "Explain step-by-step how to solve this math problem: If x² + 6x + 9 = 25, what is x?",
-          "Design a simple algorithm to find the longest palindrome in a string.",
-        ]}
-      />
-    </div>
+          <Chat
+            className="grow"
+            messages={messages}
+            handleSubmit={handleSubmit}
+            input={input}
+            handleInputChange={handleInputChange}
+            isGenerating={isLoading}
+            stop={stop}
+            append={append}
+            setMessages={setMessages}
+            suggestions={[
+              "Which came first: the chicken or the egg?",
+              "If bald people work in a restaurant, do they still need to wear a hairnet?",
+              "Explain the theory of relativity in simple terms.",
+            ]}
+          />
+        </div>
+      </CardContent>
+    </Card>
   );
 }

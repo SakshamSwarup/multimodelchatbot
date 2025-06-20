@@ -13,9 +13,12 @@ import {
 } from "@/components/ui/collapsible";
 import { FilePreview } from "@/components/ui/file-preview";
 import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 const chatBubbleVariants = cva(
-  "group/message relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]",
+  "group/message whitespace-pre-line relative break-words rounded-lg p-3 text-sm sm:max-w-[70%]",
   {
     variants: {
       isUser: {
@@ -191,8 +194,16 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
             key={`text-${index}`}
           >
             <div className={cn(chatBubbleVariants({ isUser, animation }))}>
-              <div className="prose prose-sm dark:prose-invert whitespace-pre-wra ">
-                <MarkdownRenderer>{part.text}</MarkdownRenderer>
+              <div className="prose prose-sm dark:prose-invert whitespace-pre-line">
+                <Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                  {part.text
+                    .replace(/^{"role":"assistant","content":"?/, "")
+                    .replace(/"}$/, "")
+                    .replace(/"\s*([a-zA-Z0-9_]+)\s*"\s*:/g, "$1:")
+                    .replace(/[{}]/g, "")
+                    .replace(/\\n/g, "\n")
+                    .trim()}
+                </Markdown>
               </div>
               {actions ? (
                 <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border bg-background p-1 text-foreground opacity-0 transition-opacity group-hover/message:opacity-100">
@@ -235,7 +246,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   return (
     <div className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
       <div className={cn(chatBubbleVariants({ isUser, animation }))}>
-        <MarkdownRenderer>{content}</MarkdownRenderer>
+        <Markdown>{content}</Markdown>
         {actions ? (
           <div className="absolute -bottom-4 right-2 flex space-x-1 rounded-lg border bg-background p-1 text-foreground opacity-0 transition-opacity group-hover/message:opacity-100">
             {actions}
