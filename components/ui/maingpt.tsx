@@ -53,6 +53,15 @@ const MODELS = [
     id: "microsoft/mai-ds-r1:free",
     name: "Microsoft Mai DS R1: free",
   },
+
+  {
+    id: "tngtech/deepseek-r1t-chimera:free",
+    name: "DeepSeek R1T Chimera (free)",
+  },
+  {
+    id: "cognitivecomputations/dolphin3.0-mistral-24b:free",
+    name: "Dolphin 3.0 Mistral 24B: free",
+  },
 ];
 
 type ChatDemoProps = {
