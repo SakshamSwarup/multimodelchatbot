@@ -70,7 +70,6 @@ export function ChatDemo(props: ChatDemoProps) {
     append,
     stop,
     isLoading,
-    setMessages,
   } = useChat({
     ...props,
     streamProtocol: "text",
@@ -102,14 +101,14 @@ export function ChatDemo(props: ChatDemoProps) {
 
           <Chat
             className="grow"
-            messages={messages}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            messages={messages as any}
             handleSubmit={handleSubmit}
             input={input}
             handleInputChange={handleInputChange}
             isGenerating={isLoading}
             stop={stop}
             append={append}
-            setMessages={setMessages}
             suggestions={[
               "Which came first: the chicken or the egg?",
               "If bald people work in a restaurant, do they still need to wear a hairnet?",
