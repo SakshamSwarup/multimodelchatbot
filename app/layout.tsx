@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SakshamGPT",
   description: "Multi-Model Chatbot with Free Local Models ",
+  icons: {
+    icon: "/chat.png",
+  },
 };
 
 export default function RootLayout({
